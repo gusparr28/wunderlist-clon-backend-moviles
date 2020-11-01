@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { FormComponent } from 'src/app/components/form/form.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -10,16 +12,15 @@ import { FormComponent } from 'src/app/components/form/form.component';
 export class SignupPage implements OnInit {
 
   @ViewChild(FormComponent) formComponent: FormComponent;
-  
-  public signUpForm: any = [
-    {id: 'name', placeholder: 'Name'},
-    {id: 'email', placeholder: 'Email'},
-    {id: 'password', placeholder: 'Password: 6-64 characters'}
-  ]
 
-  public submitData = {};
-  
-  constructor(private _router: Router) { }
+  public signUpForm: any = [
+    { id: 'name', placeholder: 'Name' },
+    { id: 'email', placeholder: 'Email' },
+    { id: 'password', placeholder: 'Password: 6-64 characters' }
+  ]
+  public userSubscription: Subscription;
+
+  constructor(private _router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -28,10 +29,13 @@ export class SignupPage implements OnInit {
     this.formComponent.formData['name'] = '';
     this.formComponent.formData['email'] = '';
     this.formComponent.formData['password'] = '';
+    this.userSubscription.unsubscribe();
   }
-  
+
   public postData(data) {
-    this.submitData = data;
-    this._router.navigate(['/'])
+    this.userSubscription = this._authService.signUp(data).subscribe(res => {
+      console.log(res);
+      this._router.navigate(['/']);
+    });
   }
 }
