@@ -5,7 +5,8 @@ import passportMiddleware from './middlewares/passport';
 const app = express();
 
 import authRoutes from './routes/auth';
-import specialRoutes from './routes/special';
+import taskRoutes from './routes/task';
+import userRoutes from './routes/user';
 
 // middlewares
 app.use(express.json());
@@ -15,7 +16,8 @@ passport.use(passportMiddleware);
 
 // routes
 app.use(authRoutes);
-app.use(specialRoutes);
+app.use(taskRoutes);
+app.use(userRoutes);
 
 // settings
 app.set('port', process.env.PORT || 3000);
