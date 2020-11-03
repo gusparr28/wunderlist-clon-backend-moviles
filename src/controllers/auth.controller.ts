@@ -23,7 +23,6 @@ export const signUp = async (req: Request, res: Response): Promise<Response> => 
             name,
             password: hashedPassword
         });
-        console.log(newUser);
         await newUser.save();
         return res.status(200).json({ status: 200, message: 'User successfully signed up' });
     } catch (e) {
