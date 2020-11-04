@@ -14,12 +14,10 @@ const taskSchema = new Schema({
         type: String
     },
     date: {
-        type: Date,
-        required: true
+        type: Date
     },
     time: {
-        type: String,
-        required: true
+        type: String
     },
     pinned: {
         type: Boolean,

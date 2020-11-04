@@ -20,10 +20,11 @@ export const getTaskById = async (req: any, res: Response) => {
 
 // req es de tipo any debido a que al asignarle el tipo Request da error de tipado
 export const createTask = async (req: any, res: Response) => {
-    const { description, priority, date, time, pinned, author } = req.body;
+    const { title, description, priority, date, time, pinned } = req.body;
     const { _id } = req.user;
     try {
         const newTask = new Task({
+            title,
             description,
             priority,
             date,
@@ -32,7 +33,7 @@ export const createTask = async (req: any, res: Response) => {
             author: _id
         });
         await newTask.save();
-        return res.status(200).json({ status: 200, message: 'Task successfully created' });
+        return res.status(200).json({ status: 200, message: 'Task successfully created', task: { title, description } });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ status: 500, message: 'Internal server error', error: e });
