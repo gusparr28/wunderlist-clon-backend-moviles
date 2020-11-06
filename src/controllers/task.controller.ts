@@ -52,8 +52,11 @@ export const updateTask = async (req: any, res: Response) => {
     const { title, description, priority, date, time, pinned } = req.body;
     const { _id } = req.user;
     const { id } = req.params;
+    console.log("BODY", req.body)
+    console.log("ID", id)
+    console.log("IDUSER", _id)
     try {
-        const task = await Task.findOneAndUpdate(id, {
+        const task = await Task.findByIdAndUpdate(id, {
             title,
             description,
             priority,
@@ -61,8 +64,8 @@ export const updateTask = async (req: any, res: Response) => {
             time,
             pinned,
             author: _id
-        });
-        await task?.save();
+        }, { new: true });
+        console.log("TASK", task)
         return res.status(200).json({ status: 200, message: 'Task successfully updated', task });
     } catch (e) {
         console.error(e);
