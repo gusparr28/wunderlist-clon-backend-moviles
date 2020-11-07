@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { compare, genSaltSync, hashSync } from 'bcryptjs';
 
-import User from '../models/User';
 import { createToken } from '../utils/Strategies';
+
+import User from '../models/User';
 
 export const signUp = async (req: Request, res: Response): Promise<Response> => {
     const { email, name, password } = req.body;

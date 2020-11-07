@@ -8,7 +8,6 @@ export const getTasksByUser = async (req: any, res: Response) => {
     const { _id } = req.user;
     try {
         const tasks = await Task.find({ author: _id });
-        console.log(tasks);
         return res.status(200).json({ status: 200, tasks });
     } catch (e) {
         console.error(e);
@@ -20,11 +19,11 @@ export const getTaskById = async (req: any, res: Response) => {
     const { id } = req.params;
     try {
         const task = await Task.findById(id);
-        return res.status(200).json({ status: 200, task })
+        return res.status(200).json({ status: 200, task });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ status: 500, message: 'Internal server error', error: e });
-    }
+    };
 };
 
 export const createTask = async (req: any, res: Response) => {
@@ -52,9 +51,6 @@ export const updateTask = async (req: any, res: Response) => {
     const { title, description, priority, date, time, pinned } = req.body;
     const { _id } = req.user;
     const { id } = req.params;
-    console.log("BODY", req.body)
-    console.log("ID", id)
-    console.log("IDUSER", _id)
     try {
         const task = await Task.findByIdAndUpdate(id, {
             title,
@@ -65,7 +61,6 @@ export const updateTask = async (req: any, res: Response) => {
             pinned,
             author: _id
         }, { new: true });
-        console.log("TASK", task)
         return res.status(200).json({ status: 200, message: 'Task successfully updated', task });
     } catch (e) {
         console.error(e);
