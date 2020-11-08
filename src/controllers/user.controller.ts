@@ -14,6 +14,16 @@ export const getUserInfo = async (req: any, res: Response) => {
     }
 }
 
+export const signOutUser = (req: any, res: Response, next: any) => {
+    try {
+        req.logout();
+        return res.status(200).json({ status: 200, message: 'User successfully signed out' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ status: 500, message: 'Internal server error', error: e });
+    };
+};
+
 export const updateUser = async (req: any, res: Response) => {
     const { name, email, password } = req.body;
     const { _id } = req.user;
