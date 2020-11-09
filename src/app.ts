@@ -14,32 +14,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 passport.use(passportMiddleware);
-
-const allowedOrigins = [
-    'capacitor://https://wunderlist-clon-moviles.herokuapp.com/',
-    'ionic://https://wunderlist-clon-moviles.herokuapp.com/',
-    'http://https://wunderlist-clon-moviles.herokuapp.com/',
-    'http://https://wunderlist-clon-moviles.herokuapp.com/',
-    'http://https://wunderlist-clon-moviles.herokuapp.com/'
-];
-
-// Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-const corsOptions = {
-    origin: (origin: any, callback: any) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Origin not allowed by CORS'));
-        }
-    }
-}
-
-// Enable preflight requests for all routes
-app.options('*', cors(corsOptions));
-
-app.get('/', cors(corsOptions), (req, res, next) => {
-    res.json({ message: 'This route is CORS-enabled for an allowed origin.' });
-})
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+        methods: 'POST, PUT, GET, DELETE, OPTIONS, PATCH',
+        allowedHeaders: 'Accept, Content-Type, Accept-Encoding, Content-Length, Authorization',
+    })
+);
 
 // routes
 app.use(authRoutes);
