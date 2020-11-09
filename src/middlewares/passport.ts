@@ -6,7 +6,7 @@ import User from '../models/User';
 
 const opts: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET
+    secretOrKey: process.env.JWT_SECRET || '28552455565g'
 };
 
 export default new Strategy(opts, async (payload, done) => {
