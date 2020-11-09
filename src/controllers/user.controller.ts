@@ -13,7 +13,7 @@ export const getUserInfo = async (req: any, res: Response) => {
     }
 }
 
-export const signOutUser = (req: any, res: Response, next: any) => {
+export const signOutUser = (req: any, res: Response) => {
     try {
         req.logout();
         return res.status(200).json({ status: 200, message: 'User successfully signed out' });
