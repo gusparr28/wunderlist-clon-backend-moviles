@@ -1,6 +1,7 @@
 // modules importation
 import express from 'express';
 import passport from 'passport';
+import cors from 'cors';
 import passportMiddleware from './middlewares/passport';
 const app = express();
 
@@ -13,6 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 passport.use(passportMiddleware);
+app.use(cors({
+    origin: true
+}));
 
 // routes
 app.use(authRoutes);
